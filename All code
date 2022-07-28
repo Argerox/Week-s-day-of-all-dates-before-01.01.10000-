@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Class1
+    {
+
+        static void Main()
+        {
+            char[] ConvertedDate = new char[10];
+            char[] Nums = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '/', '.' };
+            string[] DaysOfWeek = new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+            int b = 30, c = 31, d = 28;
+            int[] DaysInMonth = new int[] { c, d, c, b, c, b, c, c, b, c, b, c };
+            int[] Date = new int[10];
+            int i, a = 0; //counters for cycles
+            do
+            {
+                
+                for (i = 0; i <= 9; i++)
+                {
+                    if (i != 2 || i != 5)
+                    {
+                        ConvertedDate[i] = Convert.ToChar(Console.Read());
+                    }
+                    else
+                        Console.Read();
+                }
+
+                for (i = 0; i <= 9; i++)
+                {
+                    while (ConvertedDate[i] != Nums[a])
+                    {
+                        a++;
+                    }
+
+                    Date[i] = a;
+                    a = 0;
+                }
+
+                int DaysInYear = 0;
+                int MonthInYear = Date[3] * 10 + Date[4] - 1;
+
+                for (i = 0; i < MonthInYear; i++)
+                {
+                    DaysInYear += DaysInMonth[i];
+                }
+
+                int DaysAfterAE = Date[0] * 10 + Date[1] + DaysInYear;
+                int YearsAfterAE = Date[6] * 1000 + Date[7] * 100 + Date[8] * 10 + Date[9] - 1;
+                DaysAfterAE += YearsAfterAE / 4 + YearsAfterAE * 365;
+                int NumOfWeeksDay = (DaysAfterAE - 2) % 7;//01.01.0001 - Thursday
+
+                if (NumOfWeeksDay < 0)
+                    NumOfWeeksDay = 7 + NumOfWeeksDay;
+
+                Console.WriteLine(DaysOfWeek[NumOfWeeksDay]);
+                Console.WriteLine("Do you want to start again");
+            }
+            while (Console.ReadLine() == "yes"|| Console.ReadLine() == "y"|| Console.ReadLine() == "Y"|| Console.ReadLine() == "Yes");
+        }
+    }
+}
